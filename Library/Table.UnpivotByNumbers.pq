@@ -5,6 +5,7 @@ let func =
 
 let
     Source = Table,
+
 // Determine column names to keep
     FirstColumnsToKeep = List.FirstN(Table.ColumnNames(Source), FirstNColumnsToKeep),
 
@@ -25,20 +26,18 @@ let
     ColsToExpand = List.Union(List.Transform(RemoveTopNRows[Custom], each Table.ColumnNames(_))),
 
 // Expand the columns and add ".1" to now columns to avoid duplicate column names
- fnUnpivotByNumbers = Table.ExpandTableColumn(RemoveTopNRows, "Custom", ColsToExpand, List.Transform(ColsToExpand, each _&".1") )
+    fnUnpivotByNumbers = Table.ExpandTableColumn(RemoveTopNRows, "Custom", ColsToExpand, List.Transform(ColsToExpand, each _&".1") )
 in
     fnUnpivotByNumbers
-, documentation = [
-Documentation.Name =  " fnTable.UnpivotByNumbers
-", Documentation.Description = " Unpivots a table according to the number of columns and header rows passed on in the parameters
-" , Documentation.LongDescription = " Unpivots a table according to the number of columns and header rows passed on in the parameters
-", Documentation.Category = " Table functions
-", Documentation.Source = " Check this blogpost explaining how it works: http://wp.me/p6lgsG-zW .
-", Documentation.Author = " Imke Feldmann: www.TheBIccountant.com
-", Documentation.Examples = {[Description =  " 
-" , Code = " Check this blogpost explaining how it works: http://wp.me/p6lgsG-zW
- ", Result = " 
-"]}] 
- in 
+    , documentation = [Documentation.Name =  " fnTable.UnpivotByNumbers"
+       , Documentation.Description = " Unpivots a table according to the number of columns and header rows passed on in the parameters"
+       , Documentation.LongDescription = " Unpivots a table according to the number of columns and header rows passed on in the parameters"
+       , Documentation.Category = " Table functions"
+       , Documentation.Source = " Check this blogpost explaining how it works: http://wp.me/p6lgsG-zW ."
+       , Documentation.Author = " Imke Feldmann: www.TheBIccountant.com"
+       , Documentation.Examples = {[Description =  " "
+             , Code = " Check this blogpost explaining how it works: http://wp.me/p6lgsG-zW"
+             , Result = " "]}] 
+in 
   Value.ReplaceType(func, Value.ReplaceMetadata(Value.Type(func), documentation)) 
 
